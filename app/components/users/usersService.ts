@@ -16,3 +16,7 @@ export const getUserService = async (id: string): Promise<User | undefined> => {
 export const createUserService = async (id: string, user: User): Promise<UserDAL> => {
     return usersDAL.set(id, user);
 };
+
+export const updateUserService = async (id: string, user: User): Promise<UserDAL> => {
+    return usersDAL.set(id, user);
+};

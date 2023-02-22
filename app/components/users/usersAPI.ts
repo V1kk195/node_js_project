@@ -1,20 +1,23 @@
-import express from 'express';
-import { createUserController, getUserController, getUsersController } from './usersController';
+import { Router } from 'express';
 
-const router = express.Router();
+import {
+    createUserController,
+    getUserController,
+    getAllUsersController,
+    updateUserController,
+    deleteUserController
+} from './usersController';
 
-router.get('/', getUsersController);
+const router = Router();
 
-router.get('/:id', getUserController);
+router.get('/', getAllUsersController);
 
 router.post('/', createUserController);
 
-router.put('/:id', (req, res) => {
-    res.send('User updated');
-});
+router.get('/:id', getUserController);
 
-router.delete('/:id', (req, res) => {
-    res.send('User deleted');
-});
+router.put('/:id', updateUserController);
+
+router.delete('/:id', deleteUserController);
 
 export { router as usersAPI };
