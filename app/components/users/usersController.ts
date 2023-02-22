@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import { createUserService, getAllUsersService, getUserService, updateUserService } from './usersService';
+import { createUserService, getUsersService, getUserService, updateUserService } from './usersService';
 import { User } from '../../types';
 
 export const getAllUsersController = async (req: Request, res: Response): Promise<void> => {
-    const users = await getAllUsersService();
+    const { login, limit } = req.query;
+    const users = await getUsersService(login, limit);
 
     res.json(users);
 };

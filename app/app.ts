@@ -11,8 +11,8 @@ app.listen(port, () => {
 
 app.use(express.json());
 
-app.use('/users', usersAPI);
+app.use('/api/users', usersAPI);
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('Hello World!');
 });
