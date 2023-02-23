@@ -7,6 +7,9 @@ import {
     updateUserController,
     deleteUserController, findUserController
 } from './usersController';
+import { validateSchema } from '../../validator';
+import { validate } from './usersSchema';
+import { User } from '../../types';
 
 const router = Router();
 
@@ -14,11 +17,11 @@ router.param('id', findUserController);
 
 router.get('/', getAllUsersController);
 
-router.post('/', createUserController);
+router.post('/', validateSchema<User>(validate), createUserController);
 
 router.get('/:id', getUserController);
 
-router.put('/:id', updateUserController);
+router.put('/:id', validateSchema<User>(validate), updateUserController);
 
 router.delete('/:id', deleteUserController);
 
