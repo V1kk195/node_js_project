@@ -6,4 +6,6 @@ export type User = {
     isDeleted: boolean,
 }
 
-export type UserDAL = Map<string, User>
+export type UserCreateRequestBody = Omit<User, 'id' | 'isDeleted'>
+
+export type UsersDAL = Map<string, User>

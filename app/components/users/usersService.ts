@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { usersDAL } from './usersDAL';
-import { User, UserDAL } from '../../types';
+import { User, UserCreateRequestBody } from '../../types';
 
 
-export const getAllUsers = async (): Promise<User[]> => {
+const getAllUsers = async (): Promise<User[]> => {
     const users = Array.from(usersDAL).map(([id, user]) => {
         return user;
     });
@@ -14,12 +16,20 @@ export const getUserService = async (id: string): Promise<User | undefined> => {
     return usersDAL.get(id);
 };
 
-export const createUserService = async (id: string, user: User): Promise<UserDAL> => {
-    return usersDAL.set(id, user);
+export const createUserService = async (userBody: UserCreateRequestBody): Promise<User | undefined> => {
+    const id = uuidv4();
+
+    usersDAL.set(id, { id, isDeleted: false, ...userBody });
+
+    return usersDAL.get(id);
 };
 
-export const updateUserService = async (id: string, user: User): Promise<UserDAL> => {
-    return usersDAL.set(id, user);
+export const updateUserService = async (id: string, user: User): Promise<User | undefined> => {
+    return usersDAL.set(id, user).get(id);
+};
+
+export const deleteUserService = async (user: User): Promise<User | undefined> => {
+    return usersDAL.set(user.id, { ...user, isDeleted: true }).get(user.id);
 };
 
 const getAutoSuggestUsers = (users, loginSubstring, limit = 10) => {
@@ -32,7 +42,7 @@ const getAutoSuggestUsers = (users, loginSubstring, limit = 10) => {
     return filteredList.slice(0, Number(limit));
 };
 
-export const getUsersService = async (loginSubstring, limit) => {
+export const getUsersService = async (loginSubstring, limit): Promise<User[]> => {
     const users = await getAllUsers();
 
     if (loginSubstring) {

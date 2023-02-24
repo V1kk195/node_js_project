@@ -1,3 +1,3 @@
-import { UserDAL } from '../../types';
+import { UsersDAL } from '../../types';
 
-export const usersDAL: UserDAL = new Map();
+export const usersDAL: UsersDAL = new Map();

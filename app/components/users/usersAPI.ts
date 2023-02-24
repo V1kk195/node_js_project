@@ -7,7 +7,7 @@ import {
     updateUserController,
     deleteUserController, findUserController
 } from './usersController';
-import { validateSchema } from '../../validator';
+import { validateSchema } from '../../validators';
 import { validate } from './usersSchema';
 import { User } from '../../types';
 

@@ -1,4 +1,5 @@
 import Ajv, { JSONSchemaType } from 'ajv';
+
 import { User } from '../../types';
 
 const ajv = new Ajv({ allErrors: true });
