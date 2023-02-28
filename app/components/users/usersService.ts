@@ -1,13 +1,11 @@
 import { CreationAttributes } from 'sequelize';
 
-import { User, usersDAL } from './usersDAL';
-import { UserModel, UserType } from '../../types';
+import { User } from './usersDAL';
+import { UserModel, UserModelAttr } from '../../types';
 
 
 const getAllUsers = async (): Promise<UserModel[]> => {
-    const users = await User.findAll();
-
-    return users;
+    return await User.findAll();
 };
 
 export const getUserService = async (id: string): Promise<UserModel | null> => {
@@ -23,12 +21,20 @@ export const createUserService = async (userBody: CreationAttributes<UserModel>)
     return user;
 };
 
-export const updateUserService = async (id: string, user: UserType): Promise<UserType | undefined> => {
-    return usersDAL.set(id, user).get(id);
+export const updateUserService = async (id: string, userData: CreationAttributes<UserModel>): Promise<UserModel | null> => {
+    await User.update(userData, {
+        where: { id }
+    });
+
+    return await getUserService(id);
 };
 
-export const deleteUserService = async (user: UserType): Promise<UserType | undefined> => {
-    return usersDAL.set(user.id, { ...user, isDeleted: true }).get(user.id);
+export const deleteUserService = async (id: string, user: UserModelAttr): Promise<UserModelAttr> => {
+    await User.destroy({
+        where: { id }
+    });
+
+    return user;
 };
 
 const getAutoSuggestUsers = (users: UserModel[], loginSubstring: string, limit = 10) => {

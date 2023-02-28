@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
 import { createUserService, getUsersService, getUserService, updateUserService, deleteUserService } from './usersService';
-import { UserType } from '../../types';
+import { UserModelAttr } from '../../types';
 
 interface RequestWithUser extends Request {
-    user?: UserType
+    user?: UserModelAttr
 }
 
-export const findUserController = async (req, res, next, id): Promise<void> => {
+export const findUserController = async (req, res, next, id: string): Promise<void> => {
     const user = await getUserService(id);
 
     if (!user) {
@@ -35,16 +35,15 @@ export const createUserController = async (req: Request, res: Response): Promise
     res.status(201).json(user);
 };
 
-export const updateUserController = async ({ user, params, body }: RequestWithUser, res: Response): Promise<void> => {
-    const id = params.id;
-    const userUpdated = await updateUserService(id, { ...user, ...body });
+export const updateUserController = async ({ params, body }: RequestWithUser, res: Response): Promise<void> => {
+    const userUpdated = await updateUserService(params.id, body);
 
     res.json(userUpdated);
 };
 
-export const deleteUserController = async ({ user }: RequestWithUser, res: Response): Promise<void> => {
+export const deleteUserController = async ({ user, params }: RequestWithUser, res: Response): Promise<void> => {
     if (user) {
-        await deleteUserService(user);
+        await deleteUserService(params.id, user);
     }
 
     res.status(204).json();

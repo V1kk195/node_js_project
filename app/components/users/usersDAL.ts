@@ -1,8 +1,6 @@
-import { UserModel, UsersDAL } from '../../types';
-
-export const usersDAL: UsersDAL = new Map();
-
 import { Sequelize, DataTypes } from 'sequelize';
+
+import { UserModel } from '../../types';
 
 const sequelize = new Sequelize('sqlite::memory:');
 
