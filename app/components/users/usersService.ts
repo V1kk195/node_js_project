@@ -5,11 +5,11 @@ import { UserModel, UserModelAttr } from '../../types';
 
 
 const getAllUsers = async (): Promise<UserModel[]> => {
-    return await User.findAll();
+    return await User.findAll({ where: { isDeleted: false } });
 };
 
 export const getUserService = async (id: string): Promise<UserModel | null> => {
-    const user = await User.findOne({ where: { id } });
+    const user = await User.findOne({ where: { id, isDeleted: false } });
 
     return user || null;
 };
@@ -29,12 +29,12 @@ export const updateUserService = async (id: string, userData: CreationAttributes
     return await getUserService(id);
 };
 
-export const deleteUserService = async (id: string, user: UserModelAttr): Promise<UserModelAttr> => {
-    await User.destroy({
+export const deleteUserService = async (id: string, user: UserModelAttr): Promise<UserModelAttr | null> => {
+    await User.update({ ...user, isDeleted: true }, {
         where: { id }
     });
 
-    return user;
+    return await getUserService(id);
 };
 
 const getAutoSuggestUsers = (users: UserModel[], loginSubstring: string, limit = 10) => {

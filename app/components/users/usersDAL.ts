@@ -1,8 +1,7 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 import { UserModel } from '../../types';
-
-const sequelize = new Sequelize('sqlite::memory:');
+import { sequelize } from '../../../db';
 
 export const User = sequelize.define<UserModel>('User', {
     id: {
@@ -27,11 +26,5 @@ export const User = sequelize.define<UserModel>('User', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
-}, {
-    // Other model options go here
-});
+}, {});
 
-(async () => {
-    await sequelize.sync();
-    console.log('All models have been synchronized');
-})();

@@ -5,11 +5,10 @@ type Config = {
 }
 export const CONFIG: Config = {
     db: {
-        database: 'node_project_db',
-        username: 'postgres',
+        database: 'node_project',
+        username: 'admin',
         password: 'password',
         host: 'localhost',
-        port: 5440,
         dialect: 'postgres',
         pool: {
             max: 5,
