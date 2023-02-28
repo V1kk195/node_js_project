@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
 import { createUserService, getUsersService, getUserService, updateUserService, deleteUserService } from './usersService';
-import { User } from '../../types';
+import { UserType } from '../../types';
 
 interface RequestWithUser extends Request {
-    user?: User
+    user?: UserType
 }
 
 export const findUserController = async (req, res, next, id): Promise<void> => {
