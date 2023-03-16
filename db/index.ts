@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
-import { CONFIG } from '../config';
+import CONFIG from '../config/config.js';
 
-export const sequelize = new Sequelize(CONFIG.db);
+export const sequelize = new Sequelize(CONFIG.development);
 
 export const openConnectionToDb = async () => {
     try {
@@ -11,4 +11,8 @@ export const openConnectionToDb = async () => {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
+};
+
+export const closeConnection = () => {
+    return sequelize.close();
 };

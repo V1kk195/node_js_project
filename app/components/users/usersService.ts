@@ -1,6 +1,6 @@
 import { CreationAttributes } from 'sequelize';
 
-import { User } from './usersDAL';
+import { User } from './users.model';
 import { UserModel, UserModelAttr } from '../../types';
 
 
