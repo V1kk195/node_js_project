@@ -1,18 +1,33 @@
 import express from 'express';
+import * as dotenv from 'dotenv';
 
 import { usersAPI } from './components/users';
+import { openConnectionToDb } from '../db';
 
-const app = express();
-const port = 3100;
+dotenv.config();
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+const init = async () => {
+    try {
+        const app = express();
+        const port = process.env.PORT || 3100;
 
-app.use(express.json());
+        app.listen(port,  () => {
+            console.log(`Example app listening on port ${port}`);
+        });
 
-app.use('/api/users', usersAPI);
+        app.use(express.json());
 
-app.get('/api', (req, res) => {
-    res.send('Hello World!');
-});
+        app.use('/api/users', usersAPI);
+
+        app.get('/api', (req, res) => {
+            res.send('Hello World!');
+        });
+
+        await openConnectionToDb();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+init();
+

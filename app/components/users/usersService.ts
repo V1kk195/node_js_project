@@ -1,28 +1,43 @@
-import { usersDAL } from './usersDAL';
-import { User, UserDAL } from '../../types';
+import { CreationAttributes } from 'sequelize';
+
+import { User } from './users.model';
+import { UserModel, UserModelAttr } from '../../types';
 
 
-export const getAllUsers = async (): Promise<User[]> => {
-    const users = Array.from(usersDAL).map(([id, user]) => {
-        return user;
+const getAllUsers = async (): Promise<UserModel[]> => {
+    return await User.findAll({ where: { isDeleted: false } });
+};
+
+export const getUserService = async (id: string): Promise<UserModel | null> => {
+    const user = await User.findOne({ where: { id, isDeleted: false } });
+
+    return user || null;
+};
+
+export const createUserService = async (userBody: CreationAttributes<UserModel>): Promise<UserModel> => {
+    const user = await User.create(userBody);
+
+    console.log(user.toJSON());
+    return user;
+};
+
+export const updateUserService = async (id: string, userData: CreationAttributes<UserModel>): Promise<UserModel | null> => {
+    await User.update(userData, {
+        where: { id }
     });
 
-    return users;
+    return await getUserService(id);
 };
 
-export const getUserService = async (id: string): Promise<User | undefined> => {
-    return usersDAL.get(id);
+export const deleteUserService = async (id: string, user: UserModelAttr): Promise<UserModelAttr | null> => {
+    await User.update({ ...user, isDeleted: true }, {
+        where: { id }
+    });
+
+    return await getUserService(id);
 };
 
-export const createUserService = async (id: string, user: User): Promise<UserDAL> => {
-    return usersDAL.set(id, user);
-};
-
-export const updateUserService = async (id: string, user: User): Promise<UserDAL> => {
-    return usersDAL.set(id, user);
-};
-
-const getAutoSuggestUsers = (users, loginSubstring, limit = 10) => {
+const getAutoSuggestUsers = (users: UserModel[], loginSubstring: string, limit = 10) => {
     const filteredList = users.filter(user => user.login.toLowerCase().includes(loginSubstring.toLowerCase())).sort((a, b) => a.login.localeCompare(b.login));
 
     if (filteredList.length <= Number(limit)) {
@@ -32,7 +47,7 @@ const getAutoSuggestUsers = (users, loginSubstring, limit = 10) => {
     return filteredList.slice(0, Number(limit));
 };
 
-export const getUsersService = async (loginSubstring, limit) => {
+export const getUsersService = async (loginSubstring, limit): Promise<UserModel[]> => {
     const users = await getAllUsers();
 
     if (loginSubstring) {

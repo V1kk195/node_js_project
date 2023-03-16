@@ -1,9 +1,10 @@
 import Ajv, { JSONSchemaType } from 'ajv';
-import { User } from '../../types';
+
+import { UserModelAttr } from '../../types';
 
 const ajv = new Ajv({ allErrors: true });
 
-const schema:  JSONSchemaType<User> = {
+const schema:  JSONSchemaType<UserModelAttr> = {
     type: 'object',
     properties: {
         id: { type: 'string' },

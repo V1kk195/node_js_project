@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app/app.ts"
+    "start": "node app/app.ts",
+    "dev": "nodemon app/app.ts",
+    "db:create": "npx sequelize-cli db:create",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "db:seed:all": "npx sequelize-cli db:seed:all",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo"
   },
   "author": "",
   "license": "ISC",
@@ -19,12 +25,17 @@
     "@typescript-eslint/parser": "^5.53.0",
     "eslint": "^8.34.0",
     "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.6.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   },
   "dependencies": {
     "ajv": "^8.12.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "pg": "^8.9.0",
+    "sequelize": "^6.29.0",
+    "sqlite3": "^5.1.4",
     "uuid": "^9.0.0"
   }
 }

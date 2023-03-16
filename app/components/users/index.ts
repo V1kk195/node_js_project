@@ -1,2 +1,4 @@
 export * from './usersAPI';
-export * from './usersDAL';
+
+import { User } from './users.model';
+export default User;
