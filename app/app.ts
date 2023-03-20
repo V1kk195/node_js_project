@@ -2,6 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 
 import { usersAPI } from './components/users';
+import { groupsAPI } from './components/groups';
 import { openConnectionToDb } from '../db';
 
 dotenv.config();
@@ -18,6 +19,7 @@ const init = async () => {
         app.use(express.json());
 
         app.use('/api/users', usersAPI);
+        app.use('/api/groups', groupsAPI);
 
         app.get('/api', (req, res) => {
             res.send('Hello World!');

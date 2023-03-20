@@ -13,7 +13,7 @@ export const Group = sequelize.define<GroupModel>('Group', {
         allowNull: false
     },
     permissions: {
-        type: DataTypes.ARRAY,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false
     }
 }, {});
