@@ -15,10 +15,7 @@ export const getUserService = async (id: string): Promise<UserModel | null> => {
 };
 
 export const createUserService = async (userBody: CreationAttributes<UserModel>): Promise<UserModel> => {
-    const user = await User.create(userBody);
-
-    console.log(user.toJSON());
-    return user;
+    return await User.create(userBody);
 };
 
 export const updateUserService = async (id: string, userData: CreationAttributes<UserModel>): Promise<UserModel | null> => {
