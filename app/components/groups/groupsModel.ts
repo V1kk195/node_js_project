@@ -1,5 +1,6 @@
-import { sequelize } from '../../../db';
 import { DataTypes } from 'sequelize';
+
+import { sequelize } from '../../../db';
 import { GroupModel } from '../../types/groups';
 
 export const Group = sequelize.define<GroupModel>('Group', {
@@ -17,4 +18,3 @@ export const Group = sequelize.define<GroupModel>('Group', {
         allowNull: false
     }
 }, {});
-

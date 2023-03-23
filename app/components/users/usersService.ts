@@ -2,6 +2,7 @@ import { CreationAttributes } from 'sequelize';
 
 import { User } from './users.model';
 import { UserModel, UserModelAttr } from '../../types';
+import { Group } from '../groups';
 
 
 const getAllUsers = async (): Promise<UserModel[]> => {
