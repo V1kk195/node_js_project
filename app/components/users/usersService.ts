@@ -3,6 +3,7 @@ import { CreationAttributes } from 'sequelize';
 import { User } from './users.model';
 import { UserModel, UserModelAttr } from '../../types';
 import { Group } from '../groups';
+import { getGroupByNameService } from '../groups/groupService';
 
 
 const getAllUsers = async (): Promise<UserModel[]> => {
@@ -10,13 +11,18 @@ const getAllUsers = async (): Promise<UserModel[]> => {
 };
 
 export const getUserService = async (id: string): Promise<UserModel | null> => {
-    const user = await User.findOne({ where: { id, isDeleted: false } });
+    const user = await User.findOne({ where: { id, isDeleted: false }, include: Group });
 
     return user || null;
 };
 
 export const createUserService = async (userBody: CreationAttributes<UserModel>): Promise<UserModel> => {
-    return await User.create(userBody);
+    const user = await User.create(userBody);
+    const group = await getGroupByNameService('user');
+
+    await user.addGroup(group);
+
+    return user;
 };
 
 export const updateUserService = async (id: string, userData: CreationAttributes<UserModel>): Promise<UserModel | null> => {

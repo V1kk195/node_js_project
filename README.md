@@ -8,3 +8,6 @@
 6. Run `npm run db:migrate`
 7. Run `npm run db:seed:all`
 8. Run server `npm run dev`
+
+
+(to open db in terminal `psql node_project`)

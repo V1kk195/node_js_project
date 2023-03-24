@@ -22,5 +22,8 @@ export const UserGroups = sequelize.define<UserGroupsModel>('UserGroups', {
     }
 }, { timestamps: false });
 
-User.belongsToMany(Group, { through: UserGroups });
-Group.belongsToMany(User, { through: UserGroups });
+export const associateUserWithGroup = () => {
+    User.belongsToMany(Group, { through: UserGroups, foreignKey: 'userId' });
+    Group.belongsToMany(User, { through: UserGroups,  foreignKey: 'groupId' });
+};
+

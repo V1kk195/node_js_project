@@ -1,6 +1,6 @@
 import { CreationAttributes } from 'sequelize';
 
-import { GroupModel } from '../../types/groups';
+import { GroupModel, GroupName } from '../../types/groups';
 import { Group } from './groupsModel';
 
 export const getAllGroupsService = async (): Promise<GroupModel[]> => {
@@ -9,6 +9,12 @@ export const getAllGroupsService = async (): Promise<GroupModel[]> => {
 
 export const getGroupService = async (id: string): Promise<GroupModel | null> => {
     const group = await Group.findOne({ where: { id } });
+
+    return group || null;
+};
+
+export const getGroupByNameService = async (name: GroupName): Promise<GroupModel | null> => {
+    const group = await Group.findOne({ where: { name } });
 
     return group || null;
 };

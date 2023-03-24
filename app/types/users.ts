@@ -4,7 +4,7 @@ import {
     CreationOptional,
     InferAttributes,
     InferCreationAttributes,
-    Model, NonAttribute
+    Model
 } from 'sequelize';
 import { GroupModel } from './groups';
 
@@ -14,8 +14,7 @@ export interface UserModel extends Model<InferAttributes<UserModel>, InferCreati
     password: string;
     age: number;
     isDeleted: CreationOptional<boolean>;
-    // addGroup: BelongsToManyAddAssociationMixin<GroupModel, any>
-    // groups?: Partial<Attributes<GroupModel>>[]
+    addGroup: BelongsToManyAddAssociationMixin<GroupModel, any>
 }
 
 export type UserModelAttr = Attributes<UserModel>;

@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { usersAPI } from './components/users';
 import { groupsAPI } from './components/groups';
 import { openConnectionToDb } from '../db';
+import { associateUserWithGroup } from './components/userGroups';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ const init = async () => {
             res.send('Hello World!');
         });
 
+        associateUserWithGroup();
         await openConnectionToDb();
     } catch (e) {
         console.log(e);
