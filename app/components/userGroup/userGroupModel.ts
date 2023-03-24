@@ -3,9 +3,9 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../../../db';
 import { User } from '../users';
 import { Group } from '../groups';
-import { UserGroupsModel } from '../../types/userGroups';
+import { UserGroupModel } from '../../types/userGroups';
 
-export const UserGroups = sequelize.define<UserGroupsModel>('UserGroups', {
+export const UserGroups = sequelize.define<UserGroupModel>('UserGroups', {
     userId: {
         type: DataTypes.UUID,
         references: {

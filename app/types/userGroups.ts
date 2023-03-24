@@ -1,8 +1,8 @@
-import { Attributes, CreationOptional, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import { Attributes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 
-export interface UserGroupsModel extends Model<InferAttributes<UserGroupsModel>, InferCreationAttributes<UserGroupsModel>> {
+export interface UserGroupModel extends Model<InferAttributes<UserGroupModel>, InferCreationAttributes<UserGroupModel>> {
     userId: string;
     groupId: string;
 }
 
-export type UserModelAttr = Attributes<UserGroupsModel>;
+export type UserGroupModelAttr = Attributes<UserGroupModel>;

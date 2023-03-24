@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import { usersAPI } from './components/users';
 import { groupsAPI } from './components/groups';
 import { openConnectionToDb } from '../db';
-import { associateUserWithGroup } from './components/userGroups';
+import { associateUserWithGroup, userGroupAPI } from './components/userGroup';
 
 dotenv.config();
 
@@ -21,6 +21,7 @@ const init = async () => {
 
         app.use('/api/users', usersAPI);
         app.use('/api/groups', groupsAPI);
+        app.use('/api/userGroup', userGroupAPI);
 
         app.get('/api', (req, res) => {
             res.send('Hello World!');
