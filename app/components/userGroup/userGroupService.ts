@@ -6,7 +6,7 @@ import { UserGroupModel } from '../../types/userGroups';
 export const addUserToGroupService = async ({ userId, groupName }): Promise<UserGroupModel | null> => {
     try {
         const result = await sequelize.transaction(async (t) => {
-            const group = await getGroupByNameService(groupName);
+            const group = await getGroupByNameService(groupName, { transaction: t });
             let userGroup;
 
             if (group) {
